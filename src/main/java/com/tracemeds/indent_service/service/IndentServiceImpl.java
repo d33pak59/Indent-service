@@ -1,19 +1,17 @@
 package com.tracemeds.indent_service.service;
 
+import com.tracemeds.indent_service.client.TenantClient;
 import com.tracemeds.indent_service.dto.IndentRequest;
 import com.tracemeds.indent_service.dto.IndentResponse;
 import com.tracemeds.indent_service.entity.ENUM.IndentStatus;
 import com.tracemeds.indent_service.entity.Indent;
 import com.tracemeds.indent_service.entity.IndentItems;
 import com.tracemeds.indent_service.repository.IndentRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 
@@ -21,14 +19,17 @@ import java.util.List;
 @Service
 public class IndentServiceImpl implements IndentService {
     private final IndentRepository indentRepository;
+    private final TenantClient tenantClient;
     @Autowired
     private ModelMapper modelMapper;
     @Override
     public IndentResponse createIndent(IndentRequest request) {
         // yaha indent bana rhe hai
-
-
-
+        // here I check for the Hospital Tenant if it exist or not using Feign Client
+        boolean check= tenantClient.checkTenant(request.getHospitalId());
+        if(!check){
+            throw new RuntimeException("Unregistered Tenant. Please register yourself !!!");
+        }
 
         Long nextVal = indentRepository.getNextSequenceValue();
         String customIndentNumber = "IND-2026-" + String.format("%03d", nextVal);
