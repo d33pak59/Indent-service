@@ -6,6 +6,7 @@ import com.tracemeds.indent_service.dto.IndentResponse;
 import com.tracemeds.indent_service.entity.ENUM.IndentStatus;
 import com.tracemeds.indent_service.entity.Indent;
 import com.tracemeds.indent_service.entity.IndentItems;
+import com.tracemeds.indent_service.exception.UnregisteredTenantException;
 import com.tracemeds.indent_service.repository.IndentRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -28,7 +29,7 @@ public class IndentServiceImpl implements IndentService {
         // here I check for the Hospital Tenant if it exist or not using Feign Client
         boolean check= tenantClient.checkTenant(request.getHospitalId());
         if(!check){
-            throw new RuntimeException("Unregistered Tenant. Please register yourself !!!");
+            throw new UnregisteredTenantException("Unregistered Tenant. Please register yourself !!!");
         }
 
         Long nextVal = indentRepository.getNextSequenceValue();
@@ -42,7 +43,7 @@ public class IndentServiceImpl implements IndentService {
         List<IndentItems> items = request.getItems().stream()
                 .map(itemRequest -> {
                     IndentItems item = IndentItems.builder()
-                            .itemName(itemRequest.getItemName())
+                            .drugName(itemRequest.getDrugName())
                             .quantity(itemRequest.getQuantity())
                             .build();
 

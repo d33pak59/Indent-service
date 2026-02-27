@@ -18,7 +18,8 @@ public class IndentItems {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String itemName;
+    private String drugName;
+   // private String drugCode; // we will not take code for now
     private Integer quantity;
     @ManyToOne
     @JoinColumn(name = "indent_id")
