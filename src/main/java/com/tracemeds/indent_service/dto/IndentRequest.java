@@ -18,6 +18,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class IndentRequest {
     private String indentNumber;
+// now Im not taking drugCode from the tenant because It becomes hectic to sent the Id via postman ,
+//   but once the indent is raise from front-end using drop down then I take Id also.
+//    private String drugCode;
     @Column(nullable = false)
     private String hospitalId;
     private List<IndentItems> items;
