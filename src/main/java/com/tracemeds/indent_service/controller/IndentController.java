@@ -1,10 +1,8 @@
 package com.tracemeds.indent_service.controller;
-
 import com.tracemeds.indent_service.dto.IndentRequest;
 import com.tracemeds.indent_service.dto.IndentResponse;
 import com.tracemeds.indent_service.entity.ENUM.IndentStatus;
 import com.tracemeds.indent_service.service.IndentService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +46,7 @@ public class IndentController {
 
 //    // Update Status
 //    @PatchMapping("/{id}/status")
-//    public ResponseEntity<IndentResponse> updateStatus(
+//    public ResponseEntity<Inden tResponse> updateStatus(
 //            @PathVariable UUID id,
 //            @RequestParam IndentStatus status) {
 //
@@ -61,7 +59,6 @@ public class IndentController {
 //        indentService.deleteIndent(id);
 //        return ResponseEntity.noContent().build();
 //    }
-//
     //  Get all the indents using HospitalId
     @GetMapping("/hospital/{hospitalId}")
     public ResponseEntity<List<IndentResponse>> getByHospital(
